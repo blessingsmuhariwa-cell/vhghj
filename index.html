@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Beautiful Wife 💍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --reze-pink: #ff00cc; 
+            --indie-blue: #00d4ff;
+            --liquid-glass: rgba(255, 255, 255, 0.08); 
+        }
+        
+        body, html { 
+            margin: 0; padding: 0; background: #000; color: white; 
+            font-family: 'Montserrat', sans-serif; scroll-behavior: smooth; 
+            scroll-snap-type: y mandatory; height: 100vh;
+            overflow-x: hidden; -webkit-overflow-scrolling: touch;
+        }
+        body::-webkit-scrollbar { display: none; }
+
+        /* --- SPOTIFY LYRICS --- */
+        #spotify-lyrics {
+            position: fixed; top: 35px; left: 0; width: 100%;
+            height: 110px; text-align: center; z-index: 1000; 
+            display: none; padding: 0 20px; box-sizing: border-box;
+        }
+        .lyric-line {
+            font-size: 0.75rem; font-weight: 600; letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.2); transition: all 0.7s ease;
+            margin: 5px 0; text-transform: lowercase; min-height: 1.2rem;
+        }
+        .lyric-line.active {
+            color: #fff; font-size: 0.95rem; opacity: 1;
+            text-shadow: 0 0 15px var(--indie-blue);
+        }
+
+        /* --- BACKGROUND --- */
+        .fixed-bg { position: fixed; inset: 0; z-index: -2; background: #000; }
+        .indie-moon {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 150vw; height: 150vh; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 212, 255, 0.22) 0%, rgba(20, 5, 25, 1) 65%, #000 100%);
+        }
+
+        /* --- STABLE LIQUID CARDS --- */
+        #main-container { display: none; }
+        .section { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 25px; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always; }
+        
+        .glass-card { 
+            background: var(--liquid-glass); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); 
+            border-top: 1px solid rgba(255, 255, 255, 0.4); border-left: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 35px; border-radius: 35px; max-width: 550px; width: 85%; text-align: center; 
+            opacity: 0; transform: translateY(60px);
+            transition: all 1.3s cubic-bezier(0.19, 1, 0.22, 1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+        }
+        .section.visible .glass-card { opacity: 1; transform: translateY(0); }
+
+        .highlight-name { color: var(--reze-pink); font-weight: 600; }
+        .chapter-title { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; color: var(--reze-pink); margin: 0; }
+        .letter-text { font-size: 1.05rem; line-height: 1.8; color: rgba(255,255,255,0.95); }
+        #timer { color: var(--indie-blue); font-weight: bold; margin: 15px 0; font-size: 1.3rem; }
+        
+        /* --- ENVELOPE --- */
+        #envelope-overlay { position: fixed; inset: 0; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 5000; cursor: pointer; }
+        .envelope { width: 140px; height: 90px; background: #ff4d94; border-radius: 0 0 10px 10px; box-shadow: 0 0 40px var(--reze-pink); position: relative; }
+        .envelope::before { content: ""; position: absolute; top: 0; border-top: 55px solid #ff80b3; border-left: 70px solid transparent; border-right: 70px solid transparent; }
+        
+        #loading-text { color: white; margin-top: 20px; font-size: 0.7rem; letter-spacing: 3px; display: none; }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop playsinline><source src="song.mp3" type="audio/mpeg"></audio>
+
+    <div id="envelope-overlay" onclick="handleUnlock()">
+        <div class="envelope"><div style="text-align:center; padding-top:40px; font-size:25px;">❤️</div></div>
+        <p id="tap-text" style="color:white; margin-top:25px; font-size:0.8rem; letter-spacing:4px; font-weight:bold;">OPEN LETTER</p>
+        <p id="loading-text">SYNCING WITH YOUR HEART...</p>
+    </div>
+
+    <div id="spotify-lyrics">
+        <div id="prev" class="lyric-line"></div>
+        <div id="curr" class="lyric-line active"></div>
+        <div id="next" class="lyric-line"></div>
+    </div>
+
+    <div class="fixed-bg"></div>
+    <div class="indie-moon"></div>
+
+    <div id="main-container">
+        <div class="section">
+            <div class="glass-card">
+                <h1 class="chapter-title">To My Queen...</h1>
+                <div id="timer">00d : 00h : 00m : 00s</div>
+                <p style="opacity:0.7; font-size:0.85rem; color: var(--indie-blue);">swipe up slowly baby...</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="glass-card">
+                <p class="letter-text">
+                    my dearest <span class="highlight-name">Mrs M</span> 🥺❤️💍 🦢🦋<br><br>
+                    from the moment I noticed you, I had no idea I was looking at the woman who would change my life forever. what started as simple msgs between two people who had chemistry became the safest place my heart has ever known🥺🫶🏼
+                </p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="glass-card">
+                <p class="letter-text">
+                    since the day we made it official on <span class="highlight-name">3 November 2024</span>, you have been more than just my girlfriend, you became my peace, my best friend, my home and the love I once prayed for without even realizing it.♡<br><br>
+                    we have crossed distance, faced ups and downs, shared laughter, wiped each other's tears and created memories that still replay in my mind like my favorite movie.
+                </p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="glass-card">
+                <p class="letter-text">
+                    every single second with you is a chapter I would relive an <span class="highlight-name">infinity</span> times😭❤️🦋<br><br>
+                    you have seen me at my strongest and at my most vulnerable, yet you never let go of my hand. your patience, your effort, your sacrifices and the way you continue to choose me remind me every day how blessed I am to call you mine🥺❤️😭
+                </p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <div class="glass-card">
+                <p class="letter-text">
+                    on this Valentine's day I don't just celebrate our love... I celebrate you. The woman who walked into my life and made it brighter, softer and more meaningful 🌻<br><br>
+                    I promise to keep choosing you, to keep growing with you and to keep building the beautiful story that is only just beginning.
+                </p>
+                <h2 style="font-family:'Pinyon Script'; color:var(--reze-pink); font-size:2.8rem; margin:10px 0;">Happy Valentine's Day!</h2>
+                <p style="opacity:0.6; font-size:0.75rem; letter-spacing:4px; font-weight:bold;">MR & MRS MUHARIWA</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const m = document.getElementById('bg-music');
+        const lyrics = [
+            "yo, wizzy baby, and breezy baby",
+            "call me every day, call me every night",
+            "i'll be your everything, i'll treat you right",
+            "and if you ever feel lonely",
+            "you can hit my line, you can call on me",
+            "make we dey together, no more lonely",
+            "steady on my mind, girl you're my holy",
+            "and when you're looking in my eyes",
+            "i see the truth, i see no lies",
+            "girl you're my peace, you're my paradise",
+            "i'm with you till the end",
+            "happy valentine's day, my wife"
+        ];
+        let currentIdx = 0;
+
+        function handleUnlock() {
+            document.getElementById('tap-text').style.display = 'none';
+            document.getElementById('loading-text').style.display = 'block';
+            
+            // 5 SECOND SEAMLESS DELAY
+            setTimeout(() => {
+                m.play().catch(()=>{});
+                document.getElementById('envelope-overlay').style.display = 'none';
+                document.getElementById('main-container').style.display = 'block';
+                document.getElementById('spotify-lyrics').style.display = 'block';
+                startTimer();
+                initObserver();
+                updateLyrics();
+                setInterval(cycleLyrics, 3500);
+            }, 5000);
+        }
+
+        function cycleLyrics() {
+            currentIdx = (currentIdx + 1) % lyrics.length;
+            updateLyrics();
+        }
+
+        function updateLyrics() {
+            document.getElementById('prev').innerText = currentIdx > 0 ? lyrics[currentIdx - 1] : "";
+            document.getElementById('curr').innerText = lyrics[currentIdx];
+            document.getElementById('next').innerText = currentIdx < lyrics.length - 1 ? lyrics[currentIdx + 1] : "";
+        }
+
+        function initObserver() {
+            const obs = new IntersectionObserver((es) => {
+                es.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.section').forEach(s => obs.observe(s));
+        }
+
+        function startTimer() {
+            const start = new Date("November 3, 2024 00:00:00").getTime();
+            setInterval(() => {
+                const diff = new Date().getTime() - start;
+                const d = Math.floor(diff / 86400000);
+                const h = Math.floor((diff % 86400000) / 3600000);
+                const min = Math.floor((diff % 3600000) / 60000);
+                const s = Math.floor((diff % 60000) / 1000);
+                document.getElementById('timer').innerHTML = d + "d : " + h + "h : " + min + "m : " + s + "s";
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
